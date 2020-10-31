@@ -1,93 +1,97 @@
 ﻿using System;
-using System.Reflection.Metadata.Ecma335;
 
-namespace bài_1
+namespace bài_2
 {
-    class TienDien
+    class TamGiac
     {
-        private string tench;
-        private string DiaChi;
-        private int socongtothangtr, socongtothangn;
-        public TienDien()
+        private double A,B,C;
+        
+        public TamGiac()
         {
-            tench = DiaChi = " ";
-            socongtothangtr = socongtothangn = 0;
+            A = B = C = 0;
         }
-        public TienDien(string tench,string DiaChi,int socongtothangtr,int socongtothangn)
+        public TamGiac(double canhA,double canhB,double canhC)
         {
-            this.tench = tench;
-            this.DiaChi = DiaChi;
-            this.socongtothangtr = socongtothangtr;
-            this.socongtothangn = socongtothangn;
+            this.A = canhA;
+            this.B = canhB;
+            this.C = canhC;
         }
         public void nhap()
         {
-            Console.Write("nhap ten chu ho :");
-            tench = Console.ReadLine();
-            Console.Write("nhap Dia chi :");
-            DiaChi = Console.ReadLine();
-            Console.Write("nhap so cong to thang truoc :");
-            socongtothangtr = int.Parse( Console.ReadLine());
-            Console.Write("nhap so cong to thang nay :");
-            socongtothangn = int.Parse(Console.ReadLine());
+            Console.Write(" nhap do dai canh A:"); A = int.Parse(Console.ReadLine());
+            Console.Write(" nhap do dai canh B:"); B = int.Parse(Console.ReadLine());
+            Console.Write(" nhap do dai canh C:"); C = int.Parse(Console.ReadLine());
         }
         public void hien()
         {
-            Console.WriteLine("ten chu ho\t\tdia chi\t\tsocongtotieudung");
-            Console.WriteLine("{0}\t\t{1}\t\t{2}", tench, DiaChi, socongtothangn - socongtothangtr);
-            Console.WriteLine("so tien can thanh toan:" + tinhtien());
+            Console.WriteLine("thông tin về hình ......");
+            Console.WriteLine("Canh A = {0}\n\n Canh B = {1}\n\n Canh C = {2}", A, B, C);
+            Console.WriteLine("dien tich day = {0}", TinhDienTich);
         }
-        public int Tinhsocongtodadung
+        public bool kiemtra(double A,double B,double C)
+        {
+            return A + B > C && A + C > B && B + C > A;
+        }
+        public double TinhDienTich
         {
             get
             {
-                return socongtothangn - socongtothangtr;
+                if (kiemtra(A, B, C))
+                {
+                    double p = A + B + C / 2;
+                    double s = Math.Sqrt(p * ((p - A) * (p - B) * (p - C)));
+                    return s;
+                }
+                else
+                {
+                    Console.WriteLine("ba diem thang hang");
+                }
+                return TinhDienTich;
             }
+
         }
-        public int tinhtien()
-        {
-            return Tinhsocongtodadung * 500;
-        }
-    }
-    class TienDienMoi : TienDien
+    }    
+    class TuDien : TamGiac
     {
-        private int dinhmuc;
-        public TienDienMoi()
+        private double h;
+        public TuDien()
         {
-            dinhmuc = 0;
+            h = 0;
         }
-        public TienDienMoi(string tench, string DiaChi, int socongtothangtr, int socongtothangnay, int dinhmuc)
+        public TuDien(double A,double B,double C,double h)
         {
-            this.dinhmuc = dinhmuc;
+            this.h = h;
         }
         public new void nhap()
         {
             base.nhap();
-            Console.Write("nhap dinh muc :");
-            dinhmuc = int.Parse(Console.ReadLine());
+            Console.Write("nhap chieu cao :");h = int.Parse(Console.ReadLine());
         }
         public new void hien()
         {
-            base.hien();            
+            base.hien();
+            Console.WriteLine("chieu cao cua tu dien: " + h);
+            Console.WriteLine("dien tich tu dien =" + tinhdienticTD());
         }
-        public int TienDien()
+        public double tinhdienticTD()
         {
-            if (Tinhsocongtodadung < dinhmuc)
-                return Tinhsocongtodadung * 500;
-            else
-                return Tinhsocongtodadung * 600;
-                
+            double j = 1 / 3 * h *TinhDienTich;
+            return j;      
         }
     }
-        
     class Program
     {
         static void Main(string[] args)
         {
-            TienDienMoi t = new TienDienMoi();
+            TamGiac t = new TamGiac();
             t.nhap();
             t.hien();
-            t.tinhtien();
+            Console.ReadKey();
+            TuDien g = new TuDien();
+            g.nhap();
+            g.hien();
+           
+          
         }
     }
 }
